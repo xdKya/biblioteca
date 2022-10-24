@@ -1,4 +1,34 @@
- <KeyboardAvoidingView behavior="padding" style={styles.container}>
+import React, { Component } from "react";
+import {
+  View,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  Alert,
+  KeyboardAvoidingView,
+} from "react-native";
+import firebase from "firebase";
+
+const bgImage = require("../assets/background2.png");
+const appIcon = require("../assets/appIcon.png");
+const appName = require("../assets/appName.png");
+
+export default class LoginScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+    };
+  }
+
+  render() {
+    const { email, password } = this.state;
+    return (
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <ImageBackground source={bgImage} style={styles.bgImage}>
           <View style={styles.upperContainer}>
             <Image source={appIcon} style={styles.appIcon} />
@@ -7,21 +37,19 @@
           <View style={styles.lowerContainer}>
             <TextInput
               style={styles.textinput}
-              onChangeText={text => this.setState({ email: text })}
+              onChangeText={(text) => this.setState({ email: text })}
               placeholder={"Insira seu Email"}
               placeholderTextColor={"#FFFFFF"}
               autoFocus
             />
             <TextInput
               style={[styles.textinput, { marginTop: 20 }]}
-              onChangeText={text => this.setState({ password: text })}
+              onChangeText={(text) => this.setState({ password: text })}
               placeholder={"Insira sua Senha"}
               placeholderTextColor={"#FFFFFF"}
               secureTextEntry
             />
-            <TouchableOpacity
-              style={[styles.button, { marginTop: 20 }]}
-            >
+            <TouchableOpacity style={[styles.button, { marginTop: 20 }]}>
               <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
           </View>
@@ -34,33 +62,33 @@
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
   },
   bgImage: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   upperContainer: {
     flex: 0.5,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   appIcon: {
     width: 280,
     height: 280,
     resizeMode: "contain",
-    marginTop: 80
+    marginTop: 80,
   },
   appName: {
     width: 180,
     resizeMode: "contain",
-    marginBottom: 30
+    marginBottom: 30,
   },
   lowerContainer: {
     flex: 0.5,
-    alignItems: "center"
+    alignItems: "center",
   },
   textinput: {
     width: "75%",
@@ -72,7 +100,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#FFFFFF",
     fontFamily: "Rajdhani_600SemiBold",
-    backgroundColor: "#5653D4"
+    backgroundColor: "#5653D4",
   },
   button: {
     width: "43%",
@@ -80,11 +108,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#F48D20",
-    borderRadius: 15
+    borderRadius: 15,
   },
   buttonText: {
     fontSize: 24,
     color: "#FFFFFF",
-    fontFamily: "Rajdhani_600SemiBold"
-  }
+    fontFamily: "Rajdhani_600SemiBold",
+  },
 });
