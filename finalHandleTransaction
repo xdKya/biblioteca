@@ -1,0 +1,39 @@
+handleTransaction = async () => {
+    var { bookId, studentId } = this.state;
+    await this.getBookDetails(bookId);
+    await this.getStudentDetails(studentId);
+
+    var transactionType = await this.checkBookAvailability(bookId);
+
+    if (!transactionType) {
+      this.setState({ bookId: "", studentId: "" });
+      // Apenas para usuários do Android
+      // ToastAndroid.show("O livro não existe no banco de dados da biblioteca!", ToastAndroid.SHORT);
+      Alert.alert("O livro não existe no banco de dados da biblioteca!");
+    } else if (transactionType === "issue") {
+      var isEligible = await this.checkStudentEligibilityForBookIssue(
+        studentId
+      );
+
+      if (isEligible) {
+        var { bookName, studentName } = this.state;
+        this.initiateBookIssue(bookId, studentId, bookName, studentName);
+      }
+      // Apenas para usuários do Android
+      // ToastAndroid.show("Livro entregue ao aluno!", ToastAndroid.SHORT);
+      Alert.alert("Livro entregue ao aluno!");
+    } else {
+      var isEligible = await this.checkStudentEligibilityForBookReturn(
+        bookId,
+        studentId
+      );
+
+      if (isEligible) {
+        var { bookName, studentName } = this.state;
+        this.initiateBookReturn(bookId, studentId, bookName, studentName);
+      }
+      // Apenas para usuários do Android
+      // ToastAndroid.show("Livro devolvido à biblioteca!", ToastAndroid.SHORT);
+      Alert.alert("Livro devolvido à biblioteca!");
+    }
+  };
