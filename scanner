@@ -7,9 +7,13 @@ export default class TransactionScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+    //verificar se esta na tela normal ou na tela da camera(scanner)
       domState: "normal",
+      //verificar se o cliente deu permissao pra acessar a camera
       hasCameraPermissions: null,
+      //verificar se ja foi escaneado ou nao
       scanned: false,
+      //salvar os dados que vou escanear do qr code
       scannedData: ""
     };
   }
@@ -36,6 +40,7 @@ export default class TransactionScreen extends Component {
   };
 
   render() {
+  //namespacing: facilitando o nome das propriedades
     const { domState, hasCameraPermissions, scannedData, scanned } = this.state;
     if (domState === "scanner") {
       return (
