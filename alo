@@ -1,0 +1,32 @@
+  handleTransaction = async () => {
+    var { bookId, studentId } = this.state;
+    await this.getBookDetails(bookId);
+    await this.getStudentDetails(studentId);
+
+    db.collection("books")
+      .doc(bookId)
+      .get()
+      .then(doc => {
+        var book = doc.data();
+        if (book.is_book_available) {
+          var { bookName, studentName } = this.state;
+          this.initiateBookIssue(bookId, studentId, bookName, studentName);
+
+          // Apenas para usuários do Android
+          ToastAndroid.show("Livro entregue para o aluno!", ToastAndroid.SHORT);
+
+          //para web
+          alert("Book issued to the student!");
+          
+        } else {
+          var { bookName, studentName } = this.state;
+          this.initiateBookReturn(bookId, studentId, bookName, studentName);
+
+          // Apenas para usuários do Android
+          ToastAndroid.show("Livro retornado à biblioteca!", ToastAndroid.SHORT);
+
+          //para web
+          alert("Book returned to the library!");
+        }
+      });
+  };
